@@ -10,10 +10,11 @@ public:
     int type;
 
     Alien(int type, Vector2 position);
-    void update();
+    void update(int direction);
     void draw() const;
     int getType() const;
-    static void unload_images();
+    static void unloadImages();
+
 
 private:
 

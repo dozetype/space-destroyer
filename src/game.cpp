@@ -5,10 +5,12 @@
 Game::Game() {
     obstacles = createObstacles();
     aliens = createAliens();
+    alienDirection = 1;
+    alienLastFired = 0.0;
 }
 
 Game::~Game() {
-    Alien::unload_images();
+    Alien::unloadImages();
 }
 
 void Game::update() {
@@ -16,6 +18,11 @@ void Game::update() {
         bullet.update();
     }
     deleteInactiveBullets();
+    moveAliens();
+    alienShootBullets();
+    for (auto& bullet: alienBullets) {
+        bullet.update();
+    }
 }
 
 
@@ -33,6 +40,10 @@ void Game::draw() {
     for (auto& alien: aliens) {
         alien.draw();
     }
+
+    for (auto& bullet: alienBullets) {
+        bullet.draw();
+    }
 }
 
 void Game::handleInput() {
@@ -42,7 +53,7 @@ void Game::handleInput() {
     else if (IsKeyDown(KEY_RIGHT)) {
         player.moveRight();
     }
-    if (IsKeyDown(KEY_SPACE)) {
+    else if (IsKeyDown(KEY_SPACE)) {
         player.fireLaser();
     }
 }
@@ -51,6 +62,15 @@ void Game::deleteInactiveBullets() {
     for (auto b=player.bullets.begin(); b!=player.bullets.end();) {
         if (!b->active) {
             b = player.bullets.erase(b);
+        }
+        else {
+            ++b;
+        }
+    }
+
+    for (auto b=alienBullets.begin(); b!=alienBullets.end();) {
+        if (!b->active) {
+            b = alienBullets.erase(b);
         }
         else {
             ++b;
@@ -97,5 +117,32 @@ std::vector<Alien> Game::createAliens() {
     }
     return aliens;
 }
+
+void Game::moveAliens() {
+    for (auto& alien: aliens) {
+        alien.update(alienDirection);
+        if (alien.position.x<=0 || alien.position.x+alien.alienImages[alien.type-1].width>=GetScreenWidth()) {
+            alienDirection*=-1;
+            moveDownAliens(5);
+        }
+    }
+}
+
+void Game::moveDownAliens(const int distance) {
+    for (auto& alien: aliens) {
+        alien.position.y += distance;
+    }
+}
+
+void Game::alienShootBullets() {
+    const int randomNum = GetRandomValue(0, aliens.size()-1);
+    const Alien& alien = aliens[randomNum];
+    if (GetTime()-alienLastFired>=aliensBulletShootInterval && !aliens.empty()) {
+        alienBullets.push_back(Bullet({alien.position.x + alien.alienImages[alien.type-1].width / 2,
+            alien.position.y+alien.alienImages[alien.type-1].height}, -6));
+        alienLastFired = GetTime();
+    }
+}
+
 
 

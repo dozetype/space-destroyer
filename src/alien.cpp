@@ -30,8 +30,13 @@ int Alien::getType() const {
     return type;
 }
 
-void Alien::unload_images() {
+void Alien::unloadImages() {
     for (int i{0}; i<3; i++) {
         UnloadTexture(alienImages[i]);
     }
 }
+
+void Alien::update(int direction) {
+    position.x += direction;
+}
+
