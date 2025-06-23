@@ -13,7 +13,9 @@ add_executable(SpaceDestroyer
         Player.h
         Player.cpp
         game.h
-        game.cpp)
+        game.cpp
+        bullet.cpp
+        bullet.h)
 
 # Link raylib and its dependencies
 target_link_libraries(SpaceDestroyer raylib m pthread dl)

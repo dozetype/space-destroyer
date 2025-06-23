@@ -11,6 +11,7 @@ public:
     void HandleInput();
 
 private:
+    void DeleteInactiveBullets();
     Player player;
 };
 #endif //GAME_H
