@@ -36,7 +36,6 @@ void Player::fireLaser() {
     if (GetTime() - lastFireTime >= 0.3) {
         bullets.push_back(Bullet({position.x+image.width/2 - 2, position.y-image.height/2}, 7));
         lastFireTime = GetTime();
-        std::cout << bullets.size() << std::endl;
     }
 
 }

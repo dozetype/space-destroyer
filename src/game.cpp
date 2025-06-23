@@ -2,27 +2,40 @@
 
 #include <iostream>
 
+//Constructor
 Game::Game() {
     obstacles = createObstacles();
     aliens = createAliens();
     alienDirection = 1;
     alienLastFired = 0.0;
+    mysteryShipTimeLastSpawn = 0.0;
+    mysteryShipSpawnInterval = GetRandomValue(10, 20);
 }
 
+//Destructor
 Game::~Game() {
     Alien::unloadImages();
 }
 
 void Game::update() {
+    /**
+     * Spawning Mystery Ship at a random interval
+     */
+    if (GetTime()-mysteryShipTimeLastSpawn>mysteryShipSpawnInterval) {
+        mysteryShip.spawn();
+        mysteryShipTimeLastSpawn = GetTime();
+        mysteryShipSpawnInterval = GetRandomValue(10, 20);
+    }
     for (auto& bullet: player.bullets) {
+        bullet.update();
+    }
+    for (auto& bullet: alienBullets) {
         bullet.update();
     }
     deleteInactiveBullets();
     moveAliens();
     alienShootBullets();
-    for (auto& bullet: alienBullets) {
-        bullet.update();
-    }
+    mysteryShip.update();
 }
 
 
@@ -44,6 +57,8 @@ void Game::draw() {
     for (auto& bullet: alienBullets) {
         bullet.draw();
     }
+
+    mysteryShip.draw();
 }
 
 void Game::handleInput() {
@@ -80,7 +95,7 @@ void Game::deleteInactiveBullets() {
 
 std::vector<Obstacle> Game::createObstacles() {
     const int obstacleWidth = Obstacle::grid[0].size() * 3;
-    float gap = (GetScreenWidth()-(4*obstacleWidth))/5;
+    const float gap = (GetScreenWidth()-(4*obstacleWidth))/5;
     printf("%d, %f", obstacleWidth, gap);
 
     float x{};
@@ -143,6 +158,3 @@ void Game::alienShootBullets() {
         alienLastFired = GetTime();
     }
 }
-
-
-

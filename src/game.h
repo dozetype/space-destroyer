@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "alien.h"
+#include "mysteryShip.h"
 #include "obstacle.h"
 #include "player.h"
 
@@ -20,12 +21,17 @@ private:
     std::vector<Alien> aliens;
     std::vector<Bullet> alienBullets;
     Player player;
+    MysteryShip mysteryShip;
     int alienDirection;
     constexpr static float aliensBulletShootInterval=0.35;
     float alienLastFired;
+    float mysteryShipTimeLastSpawn;
+    int mysteryShipSpawnInterval;
+
 
     std::vector<Obstacle> createObstacles();
-    std::vector<Alien> createAliens();
+
+    static std::vector<Alien> createAliens();
     void deleteInactiveBullets();
     void moveAliens();
     void moveDownAliens(int distance);

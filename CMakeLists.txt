@@ -21,6 +21,8 @@ add_executable(SpaceDestroyer
         src/obstacle.h
         src/alien.cpp
         src/alien.h
+        src/mysteryShip.cpp
+        src/mysteryShip.h
 )
 
 # Link raylib and its dependencies
