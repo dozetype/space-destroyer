@@ -9,13 +9,17 @@ link_directories(/opt/homebrew/lib)
 
 add_executable(SpaceDestroyer
         main.cpp
-        hello.cpp
         Player.h
         Player.cpp
         game.h
         game.cpp
         bullet.cpp
-        bullet.h)
+        bullet.h
+        block.cpp
+        block.h
+        obstacle.cpp
+        obstacle.h
+)
 
 # Link raylib and its dependencies
 target_link_libraries(SpaceDestroyer raylib m pthread dl)
