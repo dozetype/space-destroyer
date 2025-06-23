@@ -8,6 +8,7 @@ Game::Game() {
 }
 
 Game::~Game() {
+    Alien::unload_images();
 }
 
 void Game::update() {
@@ -80,9 +81,18 @@ std::vector<Alien> Game::createAliens() {
     float yOff = GetScreenHeight()/2 - 2.5*55 -100;
     for (int i{0}; i<5; i++) {
         for (int j{0}; j<10; j++) {
+            int alienType;
+            if(i == 0) {
+                alienType = 3;
+            } else if (i == 1 || i == 2) {
+                alienType = 2;
+            } else {
+                alienType = 1;
+            }
+
             float x = xOff + j * 55;
             float y = yOff + i * 55;
-            aliens.push_back(Alien(1, {x, y}));
+            aliens.push_back(Alien(alienType, {x, y}));
         }
     }
     return aliens;

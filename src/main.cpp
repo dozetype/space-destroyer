@@ -10,7 +10,7 @@ int main(){
     InitWindow(windowWidth, windowHeight, "hello");
     SetTargetFPS(60);
     Game game;
-    
+
     while (WindowShouldClose() == false) {
         std::string title = "FPS: " + std::to_string(GetFPS());
         SetWindowTitle(title.c_str());
