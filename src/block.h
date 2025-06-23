@@ -5,7 +5,7 @@
 class Block {
 public:
     Block(Vector2 position);
-    void Draw() const;
+    void draw() const;
 
 private:
     Vector2 position;

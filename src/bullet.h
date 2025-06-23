@@ -6,8 +6,8 @@ class Bullet {
 public:
     bool active;
     Bullet(Vector2 position, int speed);
-    void Update();
-    void Draw() const;
+    void update();
+    void draw() const;
 
 private:
     Vector2 position;

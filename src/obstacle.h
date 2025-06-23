@@ -6,13 +6,13 @@
 
 class Obstacle {
 public:
+    static std::vector<std::vector<int>> grid;
+    Vector2 position;
     Obstacle(Vector2 position);
-    void Draw() const;
+    void draw() const;
 
 private:
-    Vector2 position;
     std::vector<Block> blocks;
-    std::vector<std::vector<int>> grid;
 };
 
 

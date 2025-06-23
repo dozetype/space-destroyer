@@ -11,10 +11,10 @@ public:
 
     Player();
     ~Player();
-    void Draw();
-    void MoveLeft();
-    void MoveRight();
-    void FireLaser();
+    void draw();
+    void moveLeft();
+    void moveRight();
+    void fireLaser();
 
 private:
     Texture2D image;
