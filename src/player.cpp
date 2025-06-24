@@ -7,7 +7,7 @@
 
 Player::Player() {
     image = LoadTexture("Graphics/spaceship.png");
-    position.x = (GetScreenWidth()-image.width) / 2;
+    position.x = (GetScreenWidth()-image.width) / 2.0f;
     position.y = (GetScreenHeight()-image.height) - 20;
     lastFireTime = 0.0;
 }
@@ -41,4 +41,10 @@ void Player::fireLaser() {
 
 Rectangle Player::getRec() const {
     return {position.x, position.y, static_cast<float>(image.width), static_cast<float>(image.height)};
+}
+
+void Player::reset() {
+    position.x = (GetScreenWidth()-image.width) / 2.0f;
+    position.y = GetScreenHeight()-image.height - 20;
+    bullets.clear();
 }

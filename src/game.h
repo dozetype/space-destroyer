@@ -10,6 +10,8 @@
 
 class Game {
 public:
+    bool run;
+
     Game();
     ~Game();
     void draw();
@@ -23,20 +25,22 @@ private:
     Player player;
     MysteryShip mysteryShip;
     int alienDirection;
-    constexpr static float aliensBulletShootInterval=0.35;
+    float aliensBulletShootInterval;
     float alienLastFired;
     float mysteryShipTimeLastSpawn;
     int mysteryShipSpawnInterval;
+    int lives;
 
 
     std::vector<Obstacle> createObstacles();
-
     static std::vector<Alien> createAliens();
     void deleteInactiveBullets();
     void moveAliens();
     void moveDownAliens(int distance);
     void alienShootBullets();
     void checkForCollisions();
-
+    void gameOver();
+    void reset();
+    void initGame();
 };
 #endif //GAME_H

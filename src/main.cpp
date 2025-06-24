@@ -19,9 +19,9 @@ int main(){
         std::string title = "FPS: " + std::to_string(GetFPS());
         SetWindowTitle(title.c_str());
 
-        game.handleInput();
-        game.draw();
         game.update();
+        game.draw();
+        game.handleInput();
 
         EndDrawing();
     }
