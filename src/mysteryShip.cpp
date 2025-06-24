@@ -39,6 +39,16 @@ void MysteryShip::draw() {
     }
 }
 
+Rectangle MysteryShip::getRec() {
+    if (alive) {
+        return {position.x, position.y, static_cast<float>(image.width), static_cast<float>(image.height)};
+    }
+    else {
+        return {0, 0, 0, 0};
+    }
+}
+
+
 
 
 

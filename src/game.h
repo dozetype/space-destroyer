@@ -36,6 +36,7 @@ private:
     void moveAliens();
     void moveDownAliens(int distance);
     void alienShootBullets();
+    void checkForCollisions();
 
 };
 #endif //GAME_H

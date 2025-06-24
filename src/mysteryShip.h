@@ -5,12 +5,14 @@
 
 class MysteryShip {
 public:
+    bool alive;
+
     MysteryShip();
     ~MysteryShip();
     void update();
     void draw();
     void spawn();
-    bool alive;
+    Rectangle getRec();
 
 private:
     Vector2 position;

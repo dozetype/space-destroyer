@@ -9,6 +9,10 @@ void Bullet::draw() const {
     }
 }
 
+Rectangle Bullet::getRec() {
+    return {position.x, position.y, 4, 15};
+}
+
 void Bullet::update() {
     if (position.y>0 && position.y<GetScreenHeight()) {
         position.y -= speed;

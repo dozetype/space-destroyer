@@ -37,5 +37,8 @@ void Player::fireLaser() {
         bullets.push_back(Bullet({position.x+image.width/2 - 2, position.y-image.height/2}, 7));
         lastFireTime = GetTime();
     }
+}
 
+Rectangle Player::getRec() const {
+    return {position.x, position.y, static_cast<float>(image.width), static_cast<float>(image.height)};
 }

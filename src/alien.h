@@ -14,6 +14,7 @@ public:
     void draw() const;
     int getType() const;
     static void unloadImages();
+    Rectangle getRec();
 
 
 private:

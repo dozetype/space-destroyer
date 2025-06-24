@@ -15,6 +15,7 @@ public:
     void moveLeft();
     void moveRight();
     void fireLaser();
+    Rectangle getRec() const;
 
 private:
     Texture2D image;

@@ -36,6 +36,7 @@ void Game::update() {
     moveAliens();
     alienShootBullets();
     mysteryShip.update();
+    checkForCollisions();
 }
 
 
@@ -112,8 +113,9 @@ std::vector<Obstacle> Game::createObstacles() {
 
 std::vector<Alien> Game::createAliens() {
     std::vector<Alien> aliens;
-    float xOff = GetScreenWidth()/2 - 5*55;
-    float yOff = GetScreenHeight()/2 - 2.5*55 -100;
+    constexpr int gap = 55;
+    const float xOff = GetScreenWidth()/2 - 5*gap;
+    const float yOff = GetScreenHeight()/2 - 2.5*gap -100;
     for (int i{0}; i<5; i++) {
         for (int j{0}; j<10; j++) {
             int alienType;
@@ -125,8 +127,8 @@ std::vector<Alien> Game::createAliens() {
                 alienType = 1;
             }
 
-            float x = xOff + j * 55;
-            float y = yOff + i * 55;
+            const float x = xOff + j * gap;
+            const float y = yOff + i * gap;
             aliens.push_back(Alien(alienType, {x, y}));
         }
     }
@@ -156,5 +158,19 @@ void Game::alienShootBullets() {
         alienBullets.push_back(Bullet({alien.position.x + alien.alienImages[alien.type-1].width / 2,
             alien.position.y+alien.alienImages[alien.type-1].height}, -6));
         alienLastFired = GetTime();
+    }
+}
+
+void Game::checkForCollisions() {
+    for (auto& bullet: player.bullets) {
+        auto it = aliens.begin();
+        while (it != aliens.end()) {
+            if (CheckCollisionRecs(it->getRec(), bullet.getRec())) {
+                it = aliens.erase(it);
+                bullet.active = false;
+            }
+            else
+                ++it;
+        }
     }
 }
