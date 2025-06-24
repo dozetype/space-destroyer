@@ -162,15 +162,75 @@ void Game::alienShootBullets() {
 }
 
 void Game::checkForCollisions() {
+    //PLAYER Bullets
     for (auto& bullet: player.bullets) {
         auto it = aliens.begin();
+        //Aliens
         while (it != aliens.end()) {
             if (CheckCollisionRecs(it->getRec(), bullet.getRec())) {
                 it = aliens.erase(it);
                 bullet.active = false;
             }
-            else
-                ++it;
+            else ++it;
+        }
+
+        if (!bullet.active) continue;
+
+        //Obstacles block
+        for (auto& ob: obstacles) {
+            auto it = ob.blocks.begin();
+            while (it != ob.blocks.end()) {
+                if (CheckCollisionRecs(it->getRec(), bullet.getRec())) {
+                    it = ob.blocks.erase(it);
+                    bullet.active = false;
+                }
+                else ++it;
+            }
+        }
+
+        //Mystery Ship
+        if (CheckCollisionRecs(mysteryShip.getRec(), bullet.getRec())) {
+            mysteryShip.alive = false;
+            bullet.active = false;
+        }
+    }
+
+    //ALIEN Bullets
+    for (auto& bullet: alienBullets) {
+        //Player
+        if (CheckCollisionRecs(player.getRec(), bullet.getRec())) {
+            bullet.active = false;
+            std::cout << "PLAYER HIT!" << std::endl;
+        }
+
+        if (!bullet.active) continue;
+
+        //Obstacles Block
+        for (auto& ob: obstacles) {
+            auto it = ob.blocks.begin();
+            while (it != ob.blocks.end()) {
+                if (CheckCollisionRecs(it->getRec(), bullet.getRec())) {
+                    it = ob.blocks.erase(it);
+                    bullet.active = false;
+                }
+                else ++it;
+            }
+        }
+    }
+
+    //Alien Collision with Obstacles
+    for (auto& alien: aliens) {
+        for (auto& ob: obstacles) {
+            auto it = ob.blocks.begin();
+            while (it != ob.blocks.end()) {
+                if (CheckCollisionRecs(it->getRec(), alien.getRec())) {
+                    it = ob.blocks.erase(it);
+                }
+                else ++it;
+            }
+        }
+        if (CheckCollisionRecs(alien.getRec(), player.getRec())) {
+            std::cout << "PlAYER HIT!" <<std::endl;
         }
     }
 }

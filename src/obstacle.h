@@ -10,9 +10,8 @@ public:
     Vector2 position;
     Obstacle(Vector2 position);
     void draw() const;
-
-private:
     std::vector<Block> blocks;
+
 };
 
 
