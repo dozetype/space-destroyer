@@ -11,6 +11,7 @@
 class Game {
 public:
     bool run;
+    int lives;
 
     Game();
     ~Game();
@@ -29,7 +30,6 @@ private:
     float alienLastFired;
     float mysteryShipTimeLastSpawn;
     int mysteryShipSpawnInterval;
-    int lives;
 
 
     std::vector<Obstacle> createObstacles();

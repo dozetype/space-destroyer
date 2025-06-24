@@ -10,7 +10,7 @@ MysteryShip::~MysteryShip() {
 }
 
 void MysteryShip::spawn() {
-    position.y = 70;
+    position.y = 50;
     int side = GetRandomValue(0,1);
 
     if (side==0) {
