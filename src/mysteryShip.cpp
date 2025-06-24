@@ -10,15 +10,15 @@ MysteryShip::~MysteryShip() {
 }
 
 void MysteryShip::spawn() {
-    position.y = 90;
+    position.y = 70;
     int side = GetRandomValue(0,1);
 
     if (side==0) {
-        position.x = 0;
+        position.x = 25;
         speed = 3;
     }
     else {
-        position.x = GetScreenWidth() - image.width;
+        position.x = GetScreenWidth() - image.width - 25;
         speed = -3;
     }
     alive = true;
@@ -27,7 +27,7 @@ void MysteryShip::spawn() {
 void MysteryShip::update() {
     if (alive) {
         position.x += speed;
-        if (position.x>GetScreenWidth() || position.x<0-image.width) {
+        if (position.x>GetScreenWidth()-25 || position.x<-image.width+25) {
             alive = false;
         }
     }

@@ -14,7 +14,7 @@ Rectangle Bullet::getRec() {
 }
 
 void Bullet::update() {
-    if (position.y>0 && position.y<GetScreenHeight()) {
+    if (position.y>10 && position.y<GetScreenHeight()-90) {
         position.y -= speed;
     }
     else {

@@ -8,7 +8,7 @@
 Player::Player() {
     image = LoadTexture("Graphics/spaceship.png");
     position.x = (GetScreenWidth()-image.width) / 2.0f;
-    position.y = (GetScreenHeight()-image.height) - 20;
+    position.y = (GetScreenHeight()-image.height) - 100;
     lastFireTime = 0.0;
 }
 
@@ -21,13 +21,13 @@ void Player::draw() {
 }
 
 void Player::moveLeft() {
-    if (position.x>0) {
+    if (position.x>25) {
         position.x-=5;
     }
 }
 
 void Player::moveRight() {
-    if (position.x < GetScreenWidth()-image.width) {
+    if (position.x < GetScreenWidth()-image.width-25) {
         position.x+=5;
     }
 }
@@ -45,6 +45,6 @@ Rectangle Player::getRec() const {
 
 void Player::reset() {
     position.x = (GetScreenWidth()-image.width) / 2.0f;
-    position.y = GetScreenHeight()-image.height - 20;
+    position.y = GetScreenHeight()-image.height - 50;
     bullets.clear();
 }
