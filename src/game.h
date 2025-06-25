@@ -12,6 +12,9 @@ class Game {
 public:
     bool run;
     int lives;
+    int score;
+    int highScore;
+    Music music;
 
     Game();
     ~Game();
@@ -30,6 +33,7 @@ private:
     float alienLastFired;
     float mysteryShipTimeLastSpawn;
     int mysteryShipSpawnInterval;
+    Sound explosionSound;
 
 
     std::vector<Obstacle> createObstacles();
@@ -42,5 +46,8 @@ private:
     void gameOver();
     void reset();
     void initGame();
+    void checkForHighScore();
+    static void saveHighScoreToFile(int highScore);
+    static int loadHighScoreFromFile();
 };
 #endif //GAME_H

@@ -1,27 +1,32 @@
 #include "game.h"
 
+#include <fstream>
 #include <iostream>
 
 //Constructor
 Game::Game() {
+    // music = LoadMusicStream("Sounds/music.ogg");
+    explosionSound = LoadSound("Sounds/explosion.ogg");
+    // PlayMusicStream(music);
     initGame();
 }
 
 //Destructor
 Game::~Game() {
+    // UnloadMusicStream(music);
+    UnloadSound(explosionSound);
     Alien::unloadImages();
 }
 
 void Game::update() {
     if (run) {
-        /**
-         * Spawning Mystery Ship at a random interval
-         */
+        // Spawning Mystery Ship at a random interval
         if (GetTime()-mysteryShipTimeLastSpawn>mysteryShipSpawnInterval) {
             mysteryShip.spawn();
             mysteryShipTimeLastSpawn = GetTime();
             mysteryShipSpawnInterval = GetRandomValue(10, 20);
         }
+
         for (auto& bullet: player.bullets) {
             bullet.update();
         }
@@ -172,8 +177,13 @@ void Game::checkForCollisions() {
         //Aliens
         while (it != aliens.end()) {
             if (CheckCollisionRecs(it->getRec(), bullet.getRec())) {
+                if (it->type == 1) score += 100;
+                else if (it->type == 2) score += 200;
+                else if (it->type == 3) score += 300;
+                checkForHighScore();
                 it = aliens.erase(it);
                 bullet.active = false;
+                PlaySound(explosionSound);
             }
             else ++it;
         }
@@ -182,13 +192,13 @@ void Game::checkForCollisions() {
 
         //Obstacles block
         for (auto& ob: obstacles) {
-            auto it = ob.blocks.begin();
-            while (it != ob.blocks.end()) {
-                if (CheckCollisionRecs(it->getRec(), bullet.getRec())) {
-                    it = ob.blocks.erase(it);
+            auto itOb = ob.blocks.begin();
+            while (itOb != ob.blocks.end()) {
+                if (CheckCollisionRecs(itOb->getRec(), bullet.getRec())) {
+                    itOb = ob.blocks.erase(itOb);
                     bullet.active = false;
                 }
-                else ++it;
+                else ++itOb;
             }
         }
 
@@ -196,6 +206,9 @@ void Game::checkForCollisions() {
         if (CheckCollisionRecs(mysteryShip.getRec(), bullet.getRec())) {
             mysteryShip.alive = false;
             bullet.active = false;
+            score += 1000;
+            checkForHighScore();
+            PlaySound(explosionSound);
         }
     }
 
@@ -265,4 +278,35 @@ void Game::initGame() {
     aliensBulletShootInterval = 0.35;
     mysteryShipSpawnInterval = GetRandomValue(10, 20);
     lives = 3;
+    score = 0;
+    highScore = loadHighScoreFromFile();
+}
+
+void Game::checkForHighScore() {
+    if (score > highScore) {
+        highScore = score;
+        saveHighScoreToFile(highScore);
+    }
+}
+
+void Game::saveHighScoreToFile(int highScore) {
+    if (std::ofstream highScoreFile("highscore.txt"); highScoreFile.is_open()) {
+        highScoreFile << highScore;
+        highScoreFile.close();
+    }
+    else {
+        std::cerr << "Failed to SAVE highscore to file!" << std::endl;
+    }
+}
+
+int Game::loadHighScoreFromFile() {
+    int loadedHighScore = 0;
+    if (std::ifstream highScoreFile("highscore.txt"); highScoreFile.is_open()) {
+        highScoreFile >> loadedHighScore;
+        highScoreFile.close();
+    }
+    else {
+        std::cerr << "Failed to LOAD highscore from file!" << std::endl;
+    }
+    return loadedHighScore;
 }

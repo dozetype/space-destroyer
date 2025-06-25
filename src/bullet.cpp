@@ -9,7 +9,7 @@ void Bullet::draw() const {
     }
 }
 
-Rectangle Bullet::getRec() {
+Rectangle Bullet::getRec() const {
     return {position.x, position.y, 4, 15};
 }
 
@@ -20,6 +20,4 @@ void Bullet::update() {
     else {
         active = false;
     }
-
 }
-

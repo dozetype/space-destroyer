@@ -12,7 +12,6 @@ MysteryShip::~MysteryShip() {
 void MysteryShip::spawn() {
     position.y = 50;
     int side = GetRandomValue(0,1);
-
     if (side==0) {
         position.x = 25;
         speed = 3;
@@ -47,8 +46,3 @@ Rectangle MysteryShip::getRec() {
         return {0, 0, 0, 0};
     }
 }
-
-
-
-
-

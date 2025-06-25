@@ -8,7 +8,7 @@ public:
     Bullet(Vector2 position, int speed);
     void update();
     void draw() const;
-    Rectangle getRec();
+    Rectangle getRec() const;
 
 private:
     Vector2 position;

@@ -10,10 +10,12 @@ Player::Player() {
     position.x = (GetScreenWidth()-image.width) / 2.0f;
     position.y = (GetScreenHeight()-image.height) - 100;
     lastFireTime = 0.0;
+    bulletSound = LoadSound("Sounds/laser.ogg");
 }
 
 Player::~Player() {
     UnloadTexture(image);
+    UnloadSound(bulletSound);
 }
 
 void Player::draw() {
@@ -36,6 +38,7 @@ void Player::fireLaser() {
     if (GetTime() - lastFireTime >= 0.3) {
         bullets.push_back(Bullet({position.x+image.width/2 - 2, position.y-image.height/2}, 7));
         lastFireTime = GetTime();
+        PlaySound(bulletSound);
     }
 }
 
