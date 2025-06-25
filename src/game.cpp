@@ -81,6 +81,11 @@ void Game::handleInput() {
             player.fireLaser();
         }
     }
+    //Pausing Game
+    //TODO? change "GAME OVER" to "PAUSED"
+    if (IsKeyPressed(KEY_P)) {
+        run = !run;
+    }
 }
 
 void Game::deleteInactiveBullets() {

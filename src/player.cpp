@@ -7,10 +7,8 @@
 
 Player::Player() {
     image = LoadTexture("Graphics/spaceship.png");
-    position.x = (GetScreenWidth()-image.width) / 2.0f;
-    position.y = (GetScreenHeight()-image.height) - 100;
-    lastFireTime = 0.0;
     bulletSound = LoadSound("Sounds/laser.ogg");
+    init();
 }
 
 Player::~Player() {
@@ -47,7 +45,12 @@ Rectangle Player::getRec() const {
 }
 
 void Player::reset() {
-    position.x = (GetScreenWidth()-image.width) / 2.0f;
-    position.y = GetScreenHeight()-image.height - 50;
+    init();
     bullets.clear();
+}
+
+void Player::init() {
+    position.x = (GetScreenWidth()-image.width) / 2.0f;
+    position.y = (GetScreenHeight()-image.height) - 100;
+    lastFireTime = 0.0;
 }

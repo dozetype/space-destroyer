@@ -23,6 +23,7 @@ private:
     Vector2 position;
     double lastFireTime;
     Sound bulletSound;
+    void init();
 };
 
 #endif //PLAYER_H
